@@ -33,7 +33,9 @@ RUN chmod +x start.sh
 RUN geth --datadir ./data init genesis.json
 
 # Import the account
-RUN echo "4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d" | geth --datadir ./data account import --password password.txt
+COPY UTC--keyfile.json /app/keyfile.json
+RUN geth --datadir ./data account import /app/keyfile.json --password password.txt
+
 
 # Create data directory with proper permissions
 RUN mkdir -p ./data && chmod -R 755 ./data
